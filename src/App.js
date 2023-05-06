@@ -39,8 +39,36 @@ switch (type)  {
           currentOperand: null
         }
       }
+
+      return {
+        ...state,
+        previousOperand: evaulate(state),
+        operation: payload,operation,
+        currentOperand: null
+      }
     case ACTIONS.CLEAR:
       return {}
+  }
+}
+
+function evaluate({ currentOperand, previousOperand, operation}) {
+  const previous = parseFloat(previousOperand)
+  const current = parseFloat(currentOperand)
+  if ( isNAN(prev) || isNaN(current)) return ""
+  let computation = ""
+  switch (operation) {
+    case "+":
+      computation = prev + current
+      break
+    case "-":
+      computation = prev - current
+      break
+    case "*":
+      computation = prev * current
+      break
+    case "÷":
+      computation = prev / current
+      break
   }
 }
 
