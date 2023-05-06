@@ -31,6 +31,13 @@ switch (type)  {
         return state
       }
 
+if(state.currentOperand == null) {
+  return {
+    ...state,
+    operation: payload.operation
+  }
+}
+
       if (state.previousOperand == null) {
         return {
           ...state,
@@ -70,6 +77,8 @@ function evaluate({ currentOperand, previousOperand, operation}) {
       computation = prev / current
       break
   }
+
+  return computation.toString()
 }
 
 function App()  {
