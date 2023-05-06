@@ -21,11 +21,26 @@ switch (type)  {
       return state
     }
 
-    
+
     return {
       ...state,
       currentOperand: '${state.currentOperand || ""}${payload.digit}',
     }
+    case ACTIONS.CHOOSE_OPERATION:
+      if (state.currentOperand == null && state.previousOperand == null) {
+        return state
+      }
+
+      if (state.previousOperand == null) {
+        return {
+          ...state,
+          operation: payload.operation,
+          previousOperand: state.currentOperand,
+          currentOperand: null
+        }
+      }
+    case ACTIONS.CLEAR:
+      return {}
   }
 }
 
@@ -39,7 +54,7 @@ function App()  {
         <div className="previous-operand">{previousOperand} {operation}</div>
           <div className="current-operand">{currentOperand}</div>
         </div>
-        <button className="span-two">AC</button>
+        <button className="span-two" onClick={() => dispatch({ type: ACTIONS.CLEAR})}>AC</button>
         <button>DEL</button>
         <OperationButton operation="÷"dispatch={dispatch} />
         <DigitButton digit="1" dispatch={dispatch} />
